@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import tensorflow as tf
 
+# Number of epochs to train 
 EPOCHS = 3
 
 lines =[]
@@ -56,9 +57,12 @@ y_train = np.array(measurements)
 from keras.models import Sequential
 from keras.layers import Flatten, Dense, Lambda, Conv2D, MaxPooling2D, Dropout, Cropping2D
 
+# Create the neural network (5 layers of convolutions followed by 4 fully connected layers)
 model = Sequential()
 model.add(Cropping2D(cropping=((50,20), (0,0)), input_shape=(160,320, 3)))
+# On the fly conversion RGB to grayscale
 model.add(Lambda(lambda x: tf.image.rgb_to_grayscale(x)))
+# Normalization
 model.add(Lambda(lambda x: (x-128)/255))
 model.add(Conv2D(24, (5,5), strides=(2, 2), padding='valid', activation='relu'))
 model.add(Conv2D(36, (5,5), strides=(2, 2), padding='valid', activation='relu'))
@@ -68,10 +72,12 @@ model.add(Conv2D(64, (3,3), strides=(1, 1), padding='valid', activation='relu'))
 model.add(Flatten())
 model.add(Dense(100))
 model.add(Dense(50))
+# Adding the dropout to minimize overfitting
 model.add(Dropout(0.5))
 model.add(Dense(10))
 model.add(Dense(1))
 
+# Adam optimizer used
 model.compile(loss='mean_squared_error', optimizer='adam')
 model.fit(X_train, y_train, validation_split=0.2,shuffle=True, epochs=EPOCHS)
 
