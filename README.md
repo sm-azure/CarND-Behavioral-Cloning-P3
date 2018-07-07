@@ -107,6 +107,7 @@ To capture good driving behavior, I first recorded two laps on track one using c
   <b>Center Line Driving</b>
 </p>
 
+In the final training set, there were 2 such laps. The center image was flipped and added to the training set. 
 
 I then recorded the vehicle driving in the opposite direction
 <p align="center">
@@ -114,26 +115,24 @@ I then recorded the vehicle driving in the opposite direction
   <img src="examples/rc1.jpg" width="200">
   <img src="examples/rr2.jpg" width="200">
   <br>
-  <b>Center Line Driving</b>
+  <b>Reverse Direction Driving</b>
 </p>
 
+The correction data collected (and which was not added to the final training set) looked like this;
+<p align="center">
+  <img src="examples/cl1.jpg" width="200">
+  <img src="examples/cc1.jpg" width="200">
+  <img src="examples/cr1.jpg" width="200">
+  <br>
+  <b>Attempted Correction Driving</b>
+</p>
+
+After the collection process, I had around 15000 number of data points. I then preprocessed this image data by converting it from BGR to RGB space, converting it to grayscale and normalizing it before training the neural network.
 
 
-Then I repeated this process on track two in order to get more data points.
+I finally randomly shuffled the data set and put 20% of the data into a validation set. 
 
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
-
-![alt text][image6]
-![alt text][image7]
-
-Etc ....
-
-After the collection process, I had X number of data points. I then preprocessed this data by ...
-
-
-I finally randomly shuffled the data set and put Y% of the data into a validation set. 
-
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 3 as evidenced by the increasing validation error after 3 epochs. I used an adam optimizer so that manually training the learning rate wasn't necessary.
 
 
 
