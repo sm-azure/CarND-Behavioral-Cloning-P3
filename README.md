@@ -78,12 +78,21 @@ All the training was performed on an AWS GPU instance. Using the adam optimizer,
 
 #### 2. Final Model Architecture
 
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes ...
+The final model architecture (model.py lines 67-78) consisted of a convolution neural network with the following layers and layer sizes * Convolution (filters = 24, kernel=5x5, strides=2x2, activation='Relu')
+* Convolution (filters = 36, kernel=5x5, strides=2x2, activation='Relu')
+* Convolution (filters = 48, kernel=5x5, strides=2x2, activation='Relu')
+* Convolution (filters = 64, kernel=3x3, strides=1x1, activation='Relu')
+* Convolution (filters = 64, kernel=3x3, strides=1x1, activation='Relu')
+
+follwed by 5 fully connected layers.
 
 Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
 
-![alt text][image1]
-
+<p align="center">
+  <img src="examples/nn.png">
+  <br>
+  <b>Model Visualization</b>
+</p>
 #### 3. Creation of the Training Set & Training Process
 
 To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
