@@ -93,17 +93,31 @@ Here is a visualization of the architecture (note: visualizing the architecture 
   <br>
   <b>Model Visualization</b>
 </p>
+
+
 #### 3. Creation of the Training Set & Training Process
 
-To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
+To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving from the three camera perspectives:
 
-![alt text][image2]
+<p align="center">
+  <img src="examples/cll.jpg" width="200">
+  <img src="examples/clc.jpg" width="200">
+  <img src="examples/clr.jpg" width="200">
+  <br>
+  <b>Center Line Driving</b>
+</p>
 
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
 
-![alt text][image3]
-![alt text][image4]
-![alt text][image5]
+I then recorded the vehicle driving in the opposite direction
+<p align="center">
+  <img src="examples/rl1.jpg" width="200">
+  <img src="examples/rc1.jpg" width="200">
+  <img src="examples/rr2.jpg" width="200">
+  <br>
+  <b>Center Line Driving</b>
+</p>
+
+
 
 Then I repeated this process on track two in order to get more data points.
 
