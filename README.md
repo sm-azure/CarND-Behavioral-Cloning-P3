@@ -22,8 +22,8 @@ The following files are submitted:
 * [model.py](model.py) (script used to create and train the model)
 * [drive.py](drive.py) (updated script to drive the car)
 * [model.h5](model.h5) (trained Keras model)
-* a report writeup file (this readme)
-* video.mp4 (a video recording of your vehicle driving autonomously around the track for at least one full lap)
+* [a report writeup](README.md) file (this readme)
+* [video.mp4](video.mp4) (a video recording of your vehicle driving autonomously around the track for at least one full lap)
 
 #### 2. Submission includes functional code
 Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing 
