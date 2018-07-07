@@ -107,7 +107,7 @@ To capture good driving behavior, I first recorded two laps on track one using c
   <b>Center Line Driving</b>
 </p>
 
-In the final training set, there were 2 such laps. The center image was flipped and added to the training set. 
+In the final training set, there were 2 such laps. The center image was flipped and added to the training set. I also tried to flip the left and right channels, but the result was not promising.
 
 I then recorded the vehicle driving in the opposite direction
 <p align="center">
