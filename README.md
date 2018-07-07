@@ -58,6 +58,61 @@ The model used an adam optimizer, so the learning rate was not tuned manually (m
 
 Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving (twice), reversing the direction of driving the car to help the car generalize better. This was later augmented by additional driving data around the corners to prevent the car from drifting out of the road at the corners. 
 
+### Model Architecture and Training Strategy
+
+#### 1. Solution Design Approach
+
+The overall strategy for deriving a model architecture was to use Lenet since I was familiar with it. However, after making adjustments to the Lenet network (changing output, adding dropout), the performance was not that great. The dataset used to train was center images, reversed center images and images from the  left and right cameras. The images were cropped from the bottom to remove the car's bonnet and the top to remove irrelevant features. 
+
+Subsequently I used the Nvidia model (with some modifications like dropout to avoid overfitting). I also wanted to see the effect for adding more data so started with data from a single lap. Surprisingly, the model generated after training with a single lap around the circuit worked very well at the first attempt (models/model.h9) and was able to drive around the track (I attribute this to beginners luck and overfitting). 
+
+After this I added the reverse direction to the training data set and instead of improving the performance, the performance dropped significantly with the car going off the track. I added another lap of data (going in the correct direction) and this helped to stabilize the car better (except at the corners). 
+
+To counter this I tried to collect recovery data (recording only the corrections). However, the car became a "line hugger"; ie. developed a tendency to it drive on the lane marking. My guess is that that the recovery training data was not collected correctly with the most of the data close to the lanes. This might have taught the car to drive on the lanes. After removing this data set, the car was back on the center line. 
+
+Finally, I decided to collect more positive training data especially around the curves. This seemed to help the network a lot and it was finally able to drive around the track. 
+
+At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
+
+All the training was performed on an AWS GPU instance. Using the adam optimizer, I did not have to choose the learning rate. The validation split was set to 20%. Also, it seemed like increasing the number of training epochs did not improve the training much, infact the validation loss started increasing after the first 3-5 iterations. 
+
+#### 2. Final Model Architecture
+
+The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes ...
+
+Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
+
+![alt text][image1]
+
+#### 3. Creation of the Training Set & Training Process
+
+To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
+
+![alt text][image2]
+
+I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
+
+![alt text][image3]
+![alt text][image4]
+![alt text][image5]
+
+Then I repeated this process on track two in order to get more data points.
+
+To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
+
+![alt text][image6]
+![alt text][image7]
+
+Etc ....
+
+After the collection process, I had X number of data points. I then preprocessed this data by ...
+
+
+I finally randomly shuffled the data set and put Y% of the data into a validation set. 
+
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
+
+
 
 
 
