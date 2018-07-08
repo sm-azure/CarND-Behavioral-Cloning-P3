@@ -30,6 +30,11 @@ Using the Udacity provided simulator and my drive.py file, the car can be driven
 ```sh
 python drive.py model.h5
 ```
+If this does not work, the model file is the same as models\model.h23
+```sh
+python drive.py models\model.h23
+```
+Also note, that the **drive.py** file is updated to include tensorflow RGB->Grayscale conversion. 
 
 #### 3. Submission code is usable and readable
 The model.py file contains the code for training and saving the convolution neural network. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
@@ -44,6 +49,8 @@ This is followed by 4 fully connected layers (model.py lines 73-78).
 
 As part of the pre-processing there is a Keras Cropping layer (model.py lines 62) followed by a lambda to convert the image to grayscale (model.py lines 64) and finally a normalization lambda layer (model.py lines 66). 
 
+*All attempts to introduce dropuouts in the convolution layer resulted in poorer performance.* Performance comparision with 'elu' is also left for a later exercise. 
+
 #### 2. Attempts to reduce overfitting in the model
 
 The model contains a single dropout layer in order to reduce overfitting (model.py lines 76) with dropout rate set to 0.5. 
@@ -57,6 +64,8 @@ The model used an adam optimizer, so the learning rate was not tuned manually (m
 #### 4. Appropriate training data
 
 Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving (twice), reversing the direction of driving the car to help the car generalize better. This was later augmented by additional driving data around the corners to prevent the car from drifting out of the road at the corners. 
+
+*Trying to normalize the data distribution using random oversampling did not work well, as the car simply could not stay on track in the corners. This was removed from the final training exercise.* 
 
 ### Model Architecture and Training Strategy
 
@@ -74,7 +83,7 @@ Finally, I decided to collect more positive training data especially around the 
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
 
-All the training was performed on an AWS GPU instance. Using the adam optimizer, I did not have to choose the learning rate. The validation split was set to 20%. Also, it seemed like increasing the number of training epochs did not improve the training much, infact the validation loss started increasing after the first 3-5 iterations. 
+All the training was performed on an AWS GPU instance. Using the adam optimizer, I did not have to choose the learning rate. Also, it seemed like increasing the number of training epochs did not improve the training much, infact the validation loss started increasing after the first 3-5 iterations. 
 
 #### 2. Final Model Architecture
 
@@ -130,7 +139,7 @@ The correction data collected (and which was not added to the final training set
 After the collection process, I had around 15000 number of data points. I then preprocessed this image data by converting it from BGR to RGB space, converting it to grayscale and normalizing it before training the neural network.
 
 
-I finally randomly shuffled the data set and put 20% of the data into a validation set. 
+**A generator was used for the training set thanks to the review feedback. Also the Keras model fit generator function was used.**
 
 I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 3 as evidenced by the increasing validation error after 3 epochs. I used an adam optimizer so that manually training the learning rate wasn't necessary.
 
