@@ -4,7 +4,7 @@ import numpy as np
 from numpy import newaxis
 import sys
 
-EPOCHS = 3
+EPOCHS = 5
 BATCH_SIZE = 128
 
 lines = []
