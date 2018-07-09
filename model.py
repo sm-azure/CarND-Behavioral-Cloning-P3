@@ -1,7 +1,7 @@
 import csv
 import cv2
 import numpy as np
-import tensorflow as tf
+from numpy import newaxis
 import sys
 
 EPOCHS = 3
@@ -26,10 +26,13 @@ def normalize_steering_angles(lines):
     for line in lines:
         angles.append(float(line[3]))
     unique, counts = np.unique(angles, return_counts=True)
+    print(unique, counts)
     from imblearn.over_sampling import RandomOverSampler
     ros = RandomOverSampler()
     lines, angles = ros.fit_sample(lines, angles)
     unique, counts = np.unique(angles, return_counts=True)
+    print('Post ROS--------------------------')
+    print(unique, counts)
 
 
 
@@ -41,11 +44,11 @@ def process_line(line, is_test = False):
     left_path = line[1]
     right_path = line[2]
     img_center = cv2.cvtColor(cv2.imread(
-        current_path + center_path.split('\\')[-1]), cv2.COLOR_BGR2RGB)
+        current_path + center_path.split('\\')[-1]), cv2.COLOR_BGR2GRAY)
     img_left = cv2.cvtColor(cv2.imread(
-        current_path + left_path.split('\\')[-1]), cv2.COLOR_BGR2RGB)
+        current_path + left_path.split('\\')[-1]), cv2.COLOR_BGR2GRAY)
     img_right = cv2.cvtColor(cv2.imread(
-        current_path + right_path.split('\\')[-1]), cv2.COLOR_BGR2RGB)
+        current_path + right_path.split('\\')[-1]), cv2.COLOR_BGR2GRAY)
     measurement = float(line[3])
     steering_left = measurement + correction
     steering_right = measurement - correction
@@ -78,6 +81,8 @@ def generate_data(lines, batch_size=128, is_test = False):
             images.extend(imgs)
             measurements.extend(st_angles)
             if(len(measurements) >= batch_size):
+                images = np.asarray(images)
+                images = images.reshape(images.shape[0], 160, 320, 1)
                 yield (np.array(images), np.array(measurements))
                 images = []
                 measurements = []
@@ -112,8 +117,8 @@ from keras.models import Sequential
 from keras.layers import Flatten, Dense, Lambda, Conv2D, MaxPooling2D, Dropout, Cropping2D
 
 model = Sequential()
-model.add(Cropping2D(cropping=((50, 20), (0, 0)), input_shape=(160, 320, 3)))
-model.add(Lambda(lambda x: tf.image.rgb_to_grayscale(x)))
+model.add(Cropping2D(cropping=((50, 20), (0, 0)), input_shape=(160, 320, 1)))
+#model.add(Lambda(lambda x: tf.image.rgb_to_grayscale(x)))
 model.add(Lambda(lambda x: (x-128)/255))
 model.add(Conv2D(24, (5, 5), strides=(2, 2), padding='valid', activation='relu'))
 model.add(Conv2D(36, (5, 5), strides=(2, 2), padding='valid', activation='relu'))
@@ -135,4 +140,15 @@ model.fit_generator(generator=train_gen, steps_per_epoch=(num_train_lines*4)/BAT
 validation_data=valid_gen, validation_steps=(num_train_lines*4)*0.2/BATCH_SIZE)
 
 print(model.summary())
-model.save('model.h23')
+# Save model
+model.save('model.h5')
+
+#Save model weights
+model.save_weights('my_model_weights.h5')
+
+# Save JSON version
+import json
+json_string = model.to_json()
+with open('model.json', 'w') as outfile:
+    json.dump(json_string, outfile)
+
