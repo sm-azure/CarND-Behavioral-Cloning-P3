@@ -21,7 +21,7 @@ This repository contains starting files for the Behavioral Cloning Project.
 The following files are submitted: 
 * [model.py](model.py) (script used to create and train the model)
 * [drive.py](drive.py) (updated script to drive the car)
-* [model.h5](model.h5) (trained Keras model) **Used AWS p2.xlarge instance with tensorflow_p36, Keras version 2.1.6. The files were uploaded to Git directly from there**
+* [model.h5](model.h5) (trained Keras model) **Used AWS p2.xlarge instance running Ubuntu 16.04.4 LTS, with environment "tensorflow_p36", Keras version 2.1.6, CUDA 9.0 and Intel MKL-DNN, CUDNN_MAJOR 7. The files were uploaded to Git directly from there**
 * [model.json](model.json) (Model in JSON Format)
 * [my_model_weights.h5](my_model_weights.h5) (Model Weights)
 * [a report writeup](README.md) file (this readme)
