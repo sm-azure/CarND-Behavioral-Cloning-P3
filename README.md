@@ -21,20 +21,21 @@ This repository contains starting files for the Behavioral Cloning Project.
 The following files are submitted: 
 * [model.py](model.py) (script used to create and train the model)
 * [drive.py](drive.py) (updated script to drive the car)
-* [model.h5](model.h5) (trained Keras model)
+* [model.h5](model.h5) (trained Keras model) **Used AWS p2.xlarge instance with tensorflow_p36, Keras version 2.1.6. The files were uploaded to Git directly from there**
+* [model.json](model.json) (Model in JSON Format)
+* [my_model_weights.h5](my_model_weights.h5) (Model Weights)
 * [a report writeup](README.md) file (this readme)
-* [video.mp4](video.mp4) (a video recording of your vehicle driving autonomously around the track for at least one full lap)
+* [video.mp4](video.mp4) (a video recording of your vehicle driving autonomously around the track for at least one full lap) **The model was downloaded from AWS to Windows laptop (Keras 2.2, Python 3.6.5, conda 4.5.2) for checking simulation and generating video data**
 
 #### 2. Submission includes functional code
 Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing 
 ```sh
 python drive.py model.h5
 ```
-If this does not work, the model file is the same as models\model.h23
-```sh
-python drive.py models\model.h23
-```
-Also note, that the **drive.py** file is updated to include tensorflow RGB->Grayscale conversion. 
+
+~~Also note, that the **drive.py** file is updated to include tensorflow RGB->Grayscale conversion. ~~
+
+The **drive.py** now works as is. The RGB->gray conversion is now removed. 
 
 #### 3. Submission code is usable and readable
 The model.py file contains the code for training and saving the convolution neural network. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
@@ -49,7 +50,9 @@ This is followed by 4 fully connected layers (model.py lines 73-78).
 
 As part of the pre-processing there is a Keras Cropping layer (model.py lines 62) followed by a lambda to convert the image to grayscale (model.py lines 64) and finally a normalization lambda layer (model.py lines 66). 
 
-*All attempts to introduce dropuouts in the convolution layer resulted in poorer performance.* Performance comparision with 'elu' is also left for a later exercise. 
+~~*All attempts to introduce dropuouts in the convolution layer resulted in poorer performance.* Performance comparision with 'elu' is also left for a later exercise. ~~
+
+**Dropouts were introduced** at various layers as recommended by the Udacity reviewer.
 
 #### 2. Attempts to reduce overfitting in the model
 
